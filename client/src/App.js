@@ -3,6 +3,7 @@ import { Container, AppBar, Typography, Grid, Grow } from '@material-ui/core';
 import memories from './images/memories.png';
 import useStyles from './styles';
 import Posts from './components/Posts/Posts';
+import Form from './components/Form/Form';
 
 const App = () => {
   const classes = useStyles();
@@ -31,6 +32,9 @@ const App = () => {
             >
               <Grid item xs={12} sm={7}>
                 <Posts />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Form />
               </Grid>
             </Grid>
           </Container>
