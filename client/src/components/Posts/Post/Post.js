@@ -57,7 +57,7 @@ const Post = ({ post, setCurrentId }) => {
         </Button>
         <Button size="small" color="primary" onClick={() => {}}>
           <DeleteIcon fontSize="small" />
-          Delte
+          Delete
         </Button>
       </CardActions>
     </Card>
