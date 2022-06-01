@@ -24,7 +24,6 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
   const post = req.body;
   const { id } = req.params;
-  // validate id
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send('No post with that id');
 
