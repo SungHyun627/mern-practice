@@ -8,22 +8,66 @@ import {
   Container,
 } from '@material-ui/core';
 import Input from './Input';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
+import jwt_decode from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { signin, signup } from '../../actions/auth';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
 
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    if (isSignup) {
+      dispatch(signup(formData, navigate));
+    } else {
+      dispatch(signin(formData, navigate));
+    }
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
-    handleShowPassword(false);
+    setShowPassword(false);
+  };
+
+  const googleSuccess = (res) => {
+    const token = res?.credential;
+    const result = jwt_decode(token);
+    console.log(token, result);
+
+    try {
+      dispatch({ type: 'AUTH', data: { result, token } });
+      // Redirect
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const googleError = (err) => {
+    console.log('Google Sign In was unsuccessful. Try Again Later');
+    console.log(err);
   };
 
   return (
@@ -83,7 +127,17 @@ const Auth = () => {
           >
             {isSignup ? 'Sign Up' : 'Sign In'}
           </Button>
-          <Grid container justify="flex-end">
+          <GoogleOAuthProvider clientId="857626413464-cppq3lu688tojd70gjvdn98afdfor8j5.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={googleSuccess}
+              onError={googleError}
+              className={classes.googleButton}
+              width={364}
+              theme={'filled_black'}
+            />
+          </GoogleOAuthProvider>
+
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
                 {isSignup
