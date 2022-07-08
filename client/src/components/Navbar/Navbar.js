@@ -4,6 +4,7 @@ import useStyles from './styles';
 import memories from '../../images/memories.png';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { LOGOUT } from '../../constants/actionTypes';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -14,8 +15,8 @@ const Navbar = () => {
   console.log(user);
 
   const logout = () => {
-    dispatch({ type: 'LOGOUT' });
-    navigate('/');
+    dispatch({ type: LOGOUT });
+    navigate('/auth');
     setUser(null);
   };
 
