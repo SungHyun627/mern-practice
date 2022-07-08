@@ -15,6 +15,7 @@ import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { signin, signup } from '../../actions/auth';
+import { AUTH } from '../../constants/actionTypes';
 
 const initialState = {
   firstName: '',
@@ -52,13 +53,13 @@ const Auth = () => {
     setShowPassword(false);
   };
 
-  const googleSuccess = (res) => {
+  const googleSuccess = async (res) => {
     const token = res?.credential;
     const result = jwt_decode(token);
     console.log(token, result);
 
     try {
-      dispatch({ type: 'AUTH', data: { result, token } });
+      dispatch({ type: AUTH, data: { result, token } });
       // Redirect
       navigate('/');
     } catch (error) {
