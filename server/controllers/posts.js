@@ -10,6 +10,23 @@ export const getPosts = async (req, res) => {
   }
 };
 
+export const getPostsBySearch = async (req, res) => {
+  const { searchQuery, tags } = req.query;
+  try {
+    // DB에서 Search 하기 위해 정규표현식 생성
+    const title = new RegExp(searchQuery, 'i');
+
+    // search나 tag를 포함하고 있는 post select
+    const posts = await PostMessage.find({
+      $or: [{ title }, { tags: { $in: tags.split(',') } }],
+    });
+
+    res.json({ data: posts });
+  } catch (e) {
+    res.status(404).json({ message: e.message });
+  }
+};
+
 export const createPost = async (req, res) => {
   const post = req.body;
   const newPost = new PostMessage({
