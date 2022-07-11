@@ -10,7 +10,7 @@ import {
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import { useDispatch } from 'react-redux';
-import { getPosts } from '../../actions/posts';
+import { getPosts, getPostsBySearch } from '../../actions/posts';
 import { useState, useEffect } from 'react';
 import Pagination from '../Pagination';
 import ChipInput from 'material-ui-chip-input';
@@ -39,6 +39,7 @@ const Home = () => {
   const searchPost = () => {
     if (search.trim()) {
       //dispatch => fetch search post
+      dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
       console.log(1);
     } else {
       navigate('/');
