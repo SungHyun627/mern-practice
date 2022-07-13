@@ -10,8 +10,8 @@ import {
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import { useDispatch } from 'react-redux';
-import { getPosts, getPostsBySearch } from '../../actions/posts';
-import { useState, useEffect } from 'react';
+import { getPostsBySearch } from '../../actions/posts';
+import { useState } from 'react';
 import Pagination from '../Pagination';
 import ChipInput from 'material-ui-chip-input';
 import { useLocation, useNavigate } from 'react-router-dom';
