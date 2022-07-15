@@ -14,7 +14,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(user);
 
   const logout = () => {
     dispatch({ type: LOGOUT });
