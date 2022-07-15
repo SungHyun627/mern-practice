@@ -89,6 +89,7 @@ const Home = () => {
                 onDelete={handleDelete}
                 label="Search Tags"
                 variant="outlined"
+                newChipKeys={[]}
               />
               <Button
                 onClick={searchPost}
